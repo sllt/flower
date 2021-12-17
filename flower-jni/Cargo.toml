@@ -1,0 +1,30 @@
+[package]
+name = "flower-jni"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "flowerjni"
+path = "src/lib.rs"
+crate-type = ["dylib"]
+
+[features]
+default = [
+    "flower/default-ring",
+]
+
+default-ring = [
+    "flower/default-ring",
+]
+
+default-openssl = [
+    "flower/default-openssl",
+]
+
+auto-reload = ["flower/auto-reload"]
+
+[dependencies]
+flower = { path = "../flower", default-features = false, optional = true }
+jni = { version = "0.19", default-features = false }
+tokio = { version = "1", features = ["macros", "rt"] }
+futures = "0.3"

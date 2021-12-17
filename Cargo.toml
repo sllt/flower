@@ -1,0 +1,19 @@
+[workspace]
+members = [
+    "flower",
+    "flower-bin",
+    "flower-ffi",
+    "flower-jni",
+]
+default-members = ["flower-bin"]
+
+[profile.release]
+opt-level = 3
+lto = true
+# codegen-units = 1
+panic = "abort"
+
+[profile.dev]
+opt-level = 0
+debug = true
+split-debuginfo = "unpacked"

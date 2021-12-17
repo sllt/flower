@@ -1,0 +1,32 @@
+[package]
+name = "flower-bin"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "flower"
+path = "src/main.rs"
+
+[features]
+default = [
+    "default-ring",
+]
+
+default-ring = [
+    "flower/default-ring",
+    "flower/ctrlc",
+    "auto-reload",
+]
+
+default-openssl = [
+    "flower/default-openssl",
+    "flower/ctrlc",
+    "auto-reload",
+]
+
+auto-reload = ["flower/auto-reload"]
+
+[dependencies]
+flower = { path = "../flower", default-features = false, optional = true }
+tokio = { version = "1", features = ["rt"] }
+argh = "0.1"

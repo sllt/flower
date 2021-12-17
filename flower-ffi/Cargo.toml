@@ -1,0 +1,34 @@
+[package]
+name = "flower-ffi"
+version = "0.1.0"
+authors = ["sllt <hello@sllt.me>"]
+edition = "2018"
+
+[lib]
+name = "flower"
+path = "src/lib.rs"
+crate-type = ["staticlib"]
+
+[features]
+default = [
+    "default-ring",
+]
+
+default-ring = [
+    "flower/default-openssl",
+]
+
+default-openssl = [
+    "flower/default-openssl",
+]
+
+auto-reload = ["flower/auto-reload"]
+
+[dependencies]
+flower = { path = "../flower", default-features = false, optional = true }
+tokio = { version = "1", features = ["rt"] }
+futures = "0.3"
+
+[build-dependencies]
+bindgen = "0.57"
+
