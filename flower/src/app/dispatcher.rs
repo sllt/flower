@@ -72,9 +72,6 @@ impl Dispatcher {
     where
         T: 'static + AsyncRead + AsyncWrite + Unpin + Send + Sync,
     {
-        if sess.destination.port() == 80 {
-            info!("domain is:{:?}", sess.destination.host());
-        }
         let mut lhs: Box<dyn ProxyStream> =
             if !sess.destination.is_domain() && sess.destination.port() == 443 {
                 let mut lhs = sniff::SniffingStream::new(lhs);

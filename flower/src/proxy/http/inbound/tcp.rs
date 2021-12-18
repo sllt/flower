@@ -13,7 +13,7 @@ use crate::{
     session::{Session, SocksAddr},
     proxy::{
         stream::SimpleProxyStream,
-    }
+    },
 };
 
 struct ProxyService {
@@ -35,29 +35,29 @@ impl ProxyService {
 #[allow(clippy::type_complexity)]
 impl Service<Request<Body>> for ProxyService {
     type Error = Box<dyn std::error::Error + Send + Sync>;
-    type Future = Pin<Box<dyn Future<Output = Result<Self::Response, Self::Error>> + Send>>;
+    type Future = Pin<Box<dyn Future<Output=Result<Self::Response, Self::Error>> + Send>>;
     type Response = Response<Body>;
 
     fn call(&mut self, req: Request<Body>) -> Self::Future {
         self.uri = req.uri().to_string();
 
-        if req.method() == Method::CONNECT {
-            Box::pin(future::ready(Ok(Response::builder()
-                .status(200)
-                .body(hyper::Body::empty())
-                .unwrap())))
-        } else {
-            let client = Client::builder()
-                .http1_title_case_headers(true)
-                .http1_preserve_header_case(true)
-                .build_http();
-            Box::pin(async move { Ok(client.clone().request(req).await.unwrap()) })
-        }
+        // if req.method() == Method::CONNECT {
+        //     Box::pin(future::ready(Ok(Response::builder()
+        //         .status(200)
+        //         .body(hyper::Body::empty())
+        //         .unwrap())))
+        // } else {
+        //     let client = Client::builder()
+        //         .http1_title_case_headers(true)
+        //         .http1_preserve_header_case(true)
+        //         .build_http();
+        //     Box::pin(async move { Ok(client.clone().request(req).await.unwrap()) })
+        // }
 
-        // Box::pin(future::ready(Ok(Response::builder()
-        //     .status(200)
-        //     .body(hyper::Body::empty())
-        //     .unwrap())))
+        Box::pin(future::ready(Ok(Response::builder()
+            .status(200)
+            .body(hyper::Body::empty())
+            .unwrap())))
     }
 
     fn poll_ready(
